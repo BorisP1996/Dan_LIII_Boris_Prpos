@@ -103,6 +103,8 @@ namespace Zadatak_1.ViewModel
                 {
                     MasterView mv = new MasterView();
                     mv.ShowDialog();
+                    Username = "";
+                    Password = "";
                 }
 
 

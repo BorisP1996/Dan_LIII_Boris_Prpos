@@ -194,9 +194,14 @@ namespace Zadatak_1.ViewModel
                     newAll.Email = Mail;
                     newAll.Username = Username;
                     newAll.Pasword = Password;
-                    if (CheckCredentials(newAll.Username, newAll.Pasword) == true)
+                    newAll.DateOfBirth = All.DateOfBirth;
+                    if (CheckCredentials(newAll.Username) == false)
                     {
-                        newAll.DateOfBirth = All.DateOfBirth;
+                        MessageBox.Show("Username already exists");
+                    }
+                     else if (CheckCredentials(newAll.Username) == true && newAll.DateOfBirth<DateTime.Now.AddYears(-18))
+                    {
+                        
                         context.tblAlls.Add(newAll);
                         context.SaveChanges();
                         tblManager newManager = new tblManager();
@@ -207,11 +212,22 @@ namespace Zadatak_1.ViewModel
                         context.tblManagers.Add(newManager);
                         context.SaveChanges();
                         MessageBox.Show("Manager is created");
-
+                        Name = "";
+                        Surname = "";
+                        Mail = "";
+                        Username = "";
+                        Password = "";
+                        Experience = 0;
+                        Floor = 0;
+                       
+                    }                  
+                    else if (newAll.DateOfBirth > DateTime.Now.AddYears(-18))
+                    {
+                        MessageBox.Show("Manager must be at least 18 years old");
                     }
                     else
                     {
-                        MessageBox.Show("Pasword or username already exists");
+                        MessageBox.Show("Make sure that every field is populated, especially date of birth.");
                     }
                 }
             }
@@ -260,7 +276,7 @@ namespace Zadatak_1.ViewModel
 
             return list;
         }
-        private bool CheckCredentials(string usernameInput, string paswordInput)
+        private bool CheckCredentials(string usernameInput)
         {
             try
             {
@@ -269,15 +285,14 @@ namespace Zadatak_1.ViewModel
                     List<tblAll> allEmploye = context.tblAlls.ToList();
 
                     List<string> usernameList = new List<string>();
-                    List<string> paswordList = new List<string>();
+                   
 
                     foreach (tblAll item in allEmploye)
                     {
-                        usernameList.Add(item.Username);
-                        paswordList.Add(item.Pasword);
+                        usernameList.Add(item.Username);            
                     }
 
-                    if (!usernameList.Contains(usernameInput) && !paswordList.Contains(paswordInput))
+                    if (!usernameList.Contains(usernameInput))
                     {
                         return true;
                     }
