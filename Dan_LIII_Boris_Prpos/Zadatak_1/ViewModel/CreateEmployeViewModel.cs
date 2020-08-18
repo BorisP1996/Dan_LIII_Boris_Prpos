@@ -9,6 +9,9 @@ using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
 {
+    /// <summary>
+    /// Class contains everything that is necesary for creating employe
+    /// </summary>
     class CreateEmployeViewModel : ViewModelBase
     {
         CreateEmploye ce;
@@ -166,7 +169,7 @@ namespace Zadatak_1.ViewModel
             }
         }
 
-        //
+        //Command for creating employe
         private ICommand createEmploye;
         public ICommand CreateEmploye
         {
@@ -188,6 +191,7 @@ namespace Zadatak_1.ViewModel
                 {
                     CreateManager cm = new CreateManager();
                     tblAll newAll = new tblAll();
+                    //collecting data from text boxes including validations
                     newAll.FirstName = Name;
                     newAll.Surname = Surname;
                     newAll.Email = Mail;
@@ -197,20 +201,23 @@ namespace Zadatak_1.ViewModel
                     newEmploye.Gender = Gender;
                     newEmploye.EmployeFlor = Floor;
                     newAll.DateOfBirth = All.DateOfBirth;
+                    //email must be unique
                     if (CheckMail(newAll.Email) == false)
                     {
                         MessageBox.Show("E-mail already exists");
                     }
+                    //username must be unique
                      else if (CheckCredentials(newAll.Username) == false)
                     {
                         MessageBox.Show("Username already exists");
                     }
+                    //if everything is ok than proced with saving
                     else if (CheckCredentials(newAll.Username) == true && CheckGender(newEmploye.Gender) == true && CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == true && newAll.DateOfBirth < DateTime.Now.AddYears(-18) && CheckMail(newAll.Email)==true)
                     {
                         
                         context.tblAlls.Add(newAll);
                         context.SaveChanges();
-
+                        //give ID from user table to foreign key in employe table
                         newEmploye.AllIDemp = newAll.All_ID;
                         newEmploye.Citizenship = Citizen;
                         newEmploye.Engagment = Engagment.engName;
@@ -229,6 +236,7 @@ namespace Zadatak_1.ViewModel
                         Citizen = "";
 
                     }
+                    //NOTE: look at message boxes and you will realise what is the problem
                     else if (CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == false)
                     {
                         MessageBox.Show("Input for floor must be changed because selected floor does not have manager");
@@ -285,7 +293,10 @@ namespace Zadatak_1.ViewModel
         {
             return true;
         }
-
+        /// <summary>
+        /// Get list of engagments to combo_box
+        /// </summary>
+        /// <returns></returns>
         private List<tblEngagment> GetEng()
         {
             List<tblEngagment> list = new List<tblEngagment>();
@@ -293,6 +304,12 @@ namespace Zadatak_1.ViewModel
 
             return list;
         }
+
+        /// <summary>
+        /// MEthod checks if username is unique
+        /// </summary>
+        /// <param name="usernameInput"></param>
+        /// <returns></returns>
         private bool CheckCredentials(string usernameInput)
         {
             try
@@ -328,6 +345,12 @@ namespace Zadatak_1.ViewModel
                 return false;
             }
         }
+
+        /// <summary>
+        /// validates gender
+        /// </summary>
+        /// <param name="gender"></param>
+        /// <returns></returns>
         private bool CheckGender(string gender)
         {
             if (gender == "M" || gender == "Z" || gender == "m" || gender == "z")
@@ -339,6 +362,11 @@ namespace Zadatak_1.ViewModel
                 return false;
             }
         }
+        /// <summary>
+        /// Employe can select flor that has manager
+        /// </summary>
+        /// <param name="flor"></param>
+        /// <returns></returns>
         private bool CheckFloor(int flor)
         {
             List<tblManager> managerList = context.tblManagers.ToList();
@@ -358,6 +386,11 @@ namespace Zadatak_1.ViewModel
                 return false;
             }
         }
+        /// <summary>
+        /// Mail must be unique
+        /// </summary>
+        /// <param name="mailInput"></param>
+        /// <returns></returns>
         private bool CheckMail(string mailInput)
         {
             try

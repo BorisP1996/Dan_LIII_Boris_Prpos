@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Zadatak_1.Command;
@@ -11,6 +9,9 @@ using Zadatak_1.View;
 
 namespace Zadatak_1.ViewModel
 {
+    /// <summary>
+    /// Class contains everythin that is necesary for manager to be created
+    /// </summary>
     class CreateManagerViewModel : ViewModelBase
     {
         CreateManager cm;
@@ -180,7 +181,9 @@ namespace Zadatak_1.ViewModel
                 return createManager;
             }
         }
-
+        /// <summary>
+        /// Creates manager and validates input
+        /// </summary>
         private void CreateManagerExecute()
         {
             try
