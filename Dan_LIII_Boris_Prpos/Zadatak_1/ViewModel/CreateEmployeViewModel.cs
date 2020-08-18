@@ -196,9 +196,18 @@ namespace Zadatak_1.ViewModel
                     tblEmploye newEmploye = new tblEmploye();
                     newEmploye.Gender = Gender;
                     newEmploye.EmployeFlor = Floor;
-                    if (CheckCredentials(newAll.Username, newAll.Pasword) == true && CheckGender(newEmploye.Gender) == true && CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == true)
+                    newAll.DateOfBirth = All.DateOfBirth;
+                    if (CheckMail(newAll.Email) == false)
                     {
-                        newAll.DateOfBirth = All.DateOfBirth;
+                        MessageBox.Show("E-mail already exists");
+                    }
+                     else if (CheckCredentials(newAll.Username) == false)
+                    {
+                        MessageBox.Show("Username already exists");
+                    }
+                    else if (CheckCredentials(newAll.Username) == true && CheckGender(newEmploye.Gender) == true && CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == true && newAll.DateOfBirth < DateTime.Now.AddYears(-18) && CheckMail(newAll.Email)==true)
+                    {
+                        
                         context.tblAlls.Add(newAll);
                         context.SaveChanges();
 
@@ -209,13 +218,34 @@ namespace Zadatak_1.ViewModel
                         context.tblEmployes.Add(newEmploye);
                         context.SaveChanges();
                         MessageBox.Show("Employe is created");
+                      
+                        Name = "";
+                        Surname = "";
+                        Mail = "";
+                        Username = "";
+                        Password = "";
+                        Gender = "";
+                        Floor = 0;
+                        Citizen = "";
 
+                    }
+                    else if (CheckFloor(newEmploye.EmployeFlor.GetValueOrDefault()) == false)
+                    {
+                        MessageBox.Show("Input for floor must be changed because selected floor does not have manager");
+                    }
+                    else if (CheckGender(newEmploye.Gender) == false)
+                    {
+                        MessageBox.Show("Invalid gender input");
+                    }
+                    else if (newAll.DateOfBirth > DateTime.Now.AddYears(-18))
+                    {
+                        MessageBox.Show("Employe must be at least 18 years old");
                     }
                     else
                     {
-                        MessageBox.Show("Possible errors:\nPasword or username already exists\nInvalid gender input\nSelected floor can not be chosen\nbecause it does not have manager");
-
+                        MessageBox.Show("Make sure that all fields contain valid values"); 
                     }
+                   
                 }
             }
             catch (Exception ex)
@@ -263,7 +293,7 @@ namespace Zadatak_1.ViewModel
 
             return list;
         }
-        private bool CheckCredentials(string usernameInput, string paswordInput)
+        private bool CheckCredentials(string usernameInput)
         {
             try
             {
@@ -272,15 +302,15 @@ namespace Zadatak_1.ViewModel
                     List<tblAll> allEmploye = context.tblAlls.ToList();
 
                     List<string> usernameList = new List<string>();
-                    List<string> paswordList = new List<string>();
+                  
 
                     foreach (tblAll item in allEmploye)
                     {
                         usernameList.Add(item.Username);
-                        paswordList.Add(item.Pasword);
+                       
                     }
 
-                    if (!usernameList.Contains(usernameInput) && !paswordList.Contains(paswordInput))
+                    if (!usernameList.Contains(usernameInput))
                     {
                         return true;
                     }
@@ -300,7 +330,7 @@ namespace Zadatak_1.ViewModel
         }
         private bool CheckGender(string gender)
         {
-            if (gender == "M" || gender == "Z")
+            if (gender == "M" || gender == "Z" || gender == "m" || gender == "z")
             {
                 return true;
             }
@@ -325,6 +355,40 @@ namespace Zadatak_1.ViewModel
             }
             else
             {
+                return false;
+            }
+        }
+        private bool CheckMail(string mailInput)
+        {
+            try
+            {
+                using (Entity context = new Entity())
+                {
+                    List<tblAll> allEmploye = context.tblAlls.ToList();
+
+                    List<string> mailList = new List<string>();
+
+
+                    foreach (tblAll item in allEmploye)
+                    {
+                        mailList.Add(item.Email);
+                    }
+
+                    if (!mailList.Contains(mailInput))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
                 return false;
             }
         }

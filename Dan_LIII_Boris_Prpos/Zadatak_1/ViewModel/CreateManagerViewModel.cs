@@ -195,11 +195,15 @@ namespace Zadatak_1.ViewModel
                     newAll.Username = Username;
                     newAll.Pasword = Password;
                     newAll.DateOfBirth = All.DateOfBirth;
-                    if (CheckCredentials(newAll.Username) == false)
+                    if (CheckMail(newAll.Email)==false)
+                    {
+                        MessageBox.Show("E-mail already exists");
+                    }
+                    else if (CheckCredentials(newAll.Username) == false)
                     {
                         MessageBox.Show("Username already exists");
                     }
-                     else if (CheckCredentials(newAll.Username) == true && newAll.DateOfBirth<DateTime.Now.AddYears(-18))
+                     else if (CheckCredentials(newAll.Username) == true && newAll.DateOfBirth<DateTime.Now.AddYears(-18) && CheckMail(newAll.Email) == true)
                     {
                         
                         context.tblAlls.Add(newAll);
@@ -293,6 +297,40 @@ namespace Zadatak_1.ViewModel
                     }
 
                     if (!usernameList.Contains(usernameInput))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+                return false;
+            }
+        }
+        private bool CheckMail(string mailInput)
+        {
+            try
+            {
+                using (Entity context = new Entity())
+                {
+                    List<tblAll> allEmploye = context.tblAlls.ToList();
+
+                    List<string> mailList = new List<string>();
+
+
+                    foreach (tblAll item in allEmploye)
+                    {
+                        mailList.Add(item.Email);
+                    }
+
+                    if (!mailList.Contains(mailInput))
                     {
                         return true;
                     }
