@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Zadatak_49Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAll">
+          <Key>
+            <PropertyRef Name="All_ID" />
+          </Key>
+          <Property Name="All_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pasword" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDegree">
+          <Key>
+            <PropertyRef Name="degreIS" />
+          </Key>
+          <Property Name="degreIS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="tblEmploye">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllIDemp" Type="int" />
+          <Property Name="EmployeFlor" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="1" />
+          <Property Name="Salary" Type="int" />
+          <Property Name="Citizenship" Type="nvarchar" MaxLength="50" />
+          <Property Name="Engagment" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblEngagment">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="engName" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="tblManagers">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AllIDman" Type="int" />
+          <Property Name="ManagerFlor" Type="int" />
+          <Property Name="Experience" Type="int" />
+          <Property Name="SSS" Type="nvarchar" MaxLength="3" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__AllID__31B762FC">
+          <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
+          <End Role="tblEmploye" Type="Self.tblEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAll">
+              <PropertyRef Name="All_ID" />
+            </Principal>
+            <Dependent Role="tblEmploye">
+              <PropertyRef Name="AllIDemp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblManage__AllID__30C33EC3">
+          <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
+          <End Role="tblManagers" Type="Self.tblManagers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAll">
+              <PropertyRef Name="All_ID" />
+            </Principal>
+            <Dependent Role="tblManagers">
+              <PropertyRef Name="AllIDman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Zadatak_49ModelStoreContainer">
+          <EntitySet Name="tblAll" EntityType="Self.tblAll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDegree" EntityType="Self.tblDegree" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEmploye" EntityType="Self.tblEmploye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEngagment" EntityType="Self.tblEngagment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblManagers" EntityType="Self.tblManagers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tblEmploy__AllID__31B762FC" Association="Self.FK__tblEmploy__AllID__31B762FC">
+            <End Role="tblAll" EntitySet="tblAll" />
+            <End Role="tblEmploye" EntitySet="tblEmploye" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblManage__AllID__30C33EC3" Association="Self.FK__tblManage__AllID__30C33EC3">
+            <End Role="tblAll" EntitySet="tblAll" />
+            <End Role="tblManagers" EntitySet="tblManagers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Zadatak_49Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblAll">
+          <Key>
+            <PropertyRef Name="All_ID" />
+          </Key>
+          <Property Name="All_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblEmployes" Relationship="Self.FK__tblEmploy__AllID__31B762FC" FromRole="tblAll" ToRole="tblEmploye" />
+          <NavigationProperty Name="tblManagers" Relationship="Self.FK__tblManage__AllID__30C33EC3" FromRole="tblAll" ToRole="tblManagers" />
+        </EntityType>
+        <EntityType Name="tblDegree">
+          <Key>
+            <PropertyRef Name="degreIS" />
+          </Key>
+          <Property Name="degreIS" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEmploye">
+          <Key>
+            <PropertyRef Name="EmployeID" />
+          </Key>
+          <Property Name="EmployeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllIDemp" Type="Int32" />
+          <Property Name="EmployeFlor" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="Int32" />
+          <Property Name="Citizenship" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Engagment" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblAll" Relationship="Self.FK__tblEmploy__AllID__31B762FC" FromRole="tblEmploye" ToRole="tblAll" />
+        </EntityType>
+        <EntityType Name="tblEngagment">
+          <Key>
+            <PropertyRef Name="engID" />
+          </Key>
+          <Property Name="engID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="engName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblManager">
+          <Key>
+            <PropertyRef Name="ManagerID" />
+          </Key>
+          <Property Name="ManagerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AllIDman" Type="Int32" />
+          <Property Name="ManagerFlor" Type="Int32" />
+          <Property Name="Experience" Type="Int32" />
+          <Property Name="SSS" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblAll" Relationship="Self.FK__tblManage__AllID__30C33EC3" FromRole="tblManagers" ToRole="tblAll" />
+        </EntityType>
+        <Association Name="FK__tblEmploy__AllID__31B762FC">
+          <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
+          <End Role="tblEmploye" Type="Self.tblEmploye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAll">
+              <PropertyRef Name="All_ID" />
+            </Principal>
+            <Dependent Role="tblEmploye">
+              <PropertyRef Name="AllIDemp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblManage__AllID__30C33EC3">
+          <End Role="tblAll" Type="Self.tblAll" Multiplicity="0..1" />
+          <End Role="tblManagers" Type="Self.tblManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAll">
+              <PropertyRef Name="All_ID" />
+            </Principal>
+            <Dependent Role="tblManagers">
+              <PropertyRef Name="AllIDman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblAlls" EntityType="Self.tblAll" />
+          <EntitySet Name="tblDegrees" EntityType="Self.tblDegree" />
+          <EntitySet Name="tblEmployes" EntityType="Self.tblEmploye" />
+          <EntitySet Name="tblEngagments" EntityType="Self.tblEngagment" />
+          <EntitySet Name="tblManagers" EntityType="Self.tblManager" />
+          <AssociationSet Name="FK__tblEmploy__AllID__31B762FC" Association="Self.FK__tblEmploy__AllID__31B762FC">
+            <End Role="tblAll" EntitySet="tblAlls" />
+            <End Role="tblEmploye" EntitySet="tblEmployes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblManage__AllID__30C33EC3" Association="Self.FK__tblManage__AllID__30C33EC3">
+            <End Role="tblAll" EntitySet="tblAlls" />
+            <End Role="tblManagers" EntitySet="tblManagers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Zadatak_49ModelStoreContainer" CdmEntityContainer="Entity">
+          <EntitySetMapping Name="tblAlls">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblAll">
+              <MappingFragment StoreEntitySet="tblAll">
+                <ScalarProperty Name="All_ID" ColumnName="All_ID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDegrees">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblDegree">
+              <MappingFragment StoreEntitySet="tblDegree">
+                <ScalarProperty Name="degreIS" ColumnName="degreIS" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployes">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblEmploye">
+              <MappingFragment StoreEntitySet="tblEmploye">
+                <ScalarProperty Name="EmployeID" ColumnName="EmployeID" />
+                <ScalarProperty Name="AllIDemp" ColumnName="AllIDemp" />
+                <ScalarProperty Name="EmployeFlor" ColumnName="EmployeFlor" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="Engagment" ColumnName="Engagment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEngagments">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblEngagment">
+              <MappingFragment StoreEntitySet="tblEngagment">
+                <ScalarProperty Name="engID" ColumnName="engID" />
+                <ScalarProperty Name="engName" ColumnName="engName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblManagers">
+            <EntityTypeMapping TypeName="Zadatak_49Model.tblManager">
+              <MappingFragment StoreEntitySet="tblManagers">
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="AllIDman" ColumnName="AllIDman" />
+                <ScalarProperty Name="ManagerFlor" ColumnName="ManagerFlor" />
+                <ScalarProperty Name="Experience" ColumnName="Experience" />
+                <ScalarProperty Name="SSS" ColumnName="SSS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
